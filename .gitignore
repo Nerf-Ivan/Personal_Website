@@ -1,1 +1,18 @@
-venv/ node_modules/ pycache/ *.pyc
+ venv/
+ 
+ # Node.js dependencies
+ node_modules/
+ 
+ # Python compiled files
+ __pycache__/
+ *.pyc
+ 
+ # Tailwind CSS output
+ static/css/output.css
+ 
+ # npm logs and cache
+ npm-debug.log
+ .npm/
+ 
+ # VSCode settings
+ .vscode/

@@ -1,0 +1,11 @@
+-- Push to github --
+git add .
+git commit -m "Describe your changes"
+git push origin main
+
+-- activate virtual environment before running flask and npm in terminal:
+source venv/bin/activate  
+
+ npx tailwindcss -i static/css/input.css -o static/css/output.css --watch
+
+--When installing new packages always ensure that venv is activated

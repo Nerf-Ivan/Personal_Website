@@ -1,0 +1,15 @@
+/* styles.css or module */
+.typing {
+  font-family: 'Courier New', monospace;
+  color: #ffffff;
+  white-space: pre;
+}
+.typed-cursor {
+  font-weight: bold;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1 }
+  50% { opacity: 0 }
+}

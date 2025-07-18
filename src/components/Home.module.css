@@ -1,0 +1,143 @@
+/* Main section with layered positioning */
+.section {
+  position: relative;
+  background: linear-gradient(135deg, #020202 0%, #0a0a0a 50%, #000000 100%);
+  padding: 100px 20px;
+  min-height: 100vh;
+  border-bottom: none; /* Remove the border for smooth transition */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Particles.js container */
+.particlesContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Content layer positioned above background */
+.content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  width: 100%;
+  text-align: start;
+}
+
+/* Main heading with enhanced styling */
+.heading {
+  color: #ffffff;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  background: linear-gradient(45deg, #ffffff, #00ffff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+/* Glow animation for heading */
+@keyframes glow {
+  from {
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  }
+  to {
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+  }
+}
+
+/* Subtitle styling */
+.subtitle {
+  color: #cccccc;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  opacity: 0.9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* General heading styles */
+h1, h2, h3 {
+  color: white;
+}
+
+/* Smooth gradient transition at bottom for seamless flow into next section */
+.section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.8) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .section {
+    padding: 80px 15px;
+  }
+  
+  .heading {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 60px 10px;
+  }
+  
+  .heading {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+}
+
+/* Enhance TypedText and CodeTyper containers */
+.content > div {
+  position: relative;
+  z-index: 3;
+  margin: 1rem 0;
+}
+
+/* Add subtle backdrop blur to content for better readability */
+.content::before {
+  content: '';
+  position: absolute;
+  top: -2rem;
+  left: -2rem;
+  right: -2rem;
+  bottom: -2rem;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+/* Ensure particles.js canvas styling */
+.particlesContainer canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}

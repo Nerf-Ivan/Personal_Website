@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Linkedin, Instagram, Twitter, Github, Mail, CheckCircle } from 'lucide-react';
+import { Linkedin, Instagram, Twitter, Github, Mail, CheckCircle, AlertCircle } from 'lucide-react';
 import styles from './Contact.module.css';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const canvasRef = useRef(null);
@@ -14,9 +15,38 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  
+  // EmailJS configuration - you can switch back to env vars once working
+  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const EMAILJS_NOTIFICATION_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_NOTIFICATION_TEMPLATE_ID;
+  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+  const EMAILJS_AUTO_REPLY_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID;
+  // Initialize EmailJS
+  useEffect(() => {
+    // Load EmailJS script dynamically
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+    script.onload = () => {
+      if (window.emailjs) {
+        window.emailjs.init(EMAILJS_PUBLIC_KEY);
+        console.log('EmailJS initialized successfully');
+      }
+    };
+    document.head.appendChild(script);
+
+    return () => {
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+    };
+  }, [EMAILJS_PUBLIC_KEY]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+    
     const ctx = canvas.getContext('2d');
     
     // Set canvas size
@@ -114,22 +144,102 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Validate all fields
+  if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+    setErrorMessage('Please fill in all fields.');
+    setShowError(true);
+    setTimeout(() => setShowError(false), 5000);
+    return;
+  }
+
+  // Additional email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(formData.email)) {
+    setErrorMessage('Please enter a valid email address.');
+    setShowError(true);
+    setTimeout(() => setShowError(false), 5000);
+    return;
+  }
+
+  setIsSubmitting(true);
+  setShowError(false);
+
+  try {
+    if (!window.emailjs) {
+      throw new Error('EmailJS not loaded');
+    }
+
+    const currentTime = new Date().toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    });
+
+    const baseParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      message: formData.message,
+      time: currentTime
+    };
+
+    // Send notification to you
+    const notificationParams = {
+      ...baseParams,
+      to_email: 'ivan.swanepoel.dev@gmail.com' // Explicitly set for notification
+    };
+    console.log('Sending notification with:', {
+      SERVICE_ID: EMAILJS_SERVICE_ID,
+      TEMPLATE_ID: EMAILJS_NOTIFICATION_TEMPLATE_ID,
+      PUBLIC_KEY: EMAILJS_PUBLIC_KEY,
+      templateParams: notificationParams
+    });
+    const notificationResult = await window.emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_NOTIFICATION_TEMPLATE_ID,
+      notificationParams,
+      EMAILJS_PUBLIC_KEY
+    );
+    console.log('Notification Result:', notificationResult);
+
+    // Send auto-reply to user
+    const autoReplyParams = {
+      ...baseParams,
+      to_email: formData.email // Explicitly set for auto-reply
+    };
+    console.log('Sending auto-reply with:', {
+      SERVICE_ID: EMAILJS_SERVICE_ID,
+      TEMPLATE_ID: EMAILJS_AUTO_REPLY_TEMPLATE_ID,
+      PUBLIC_KEY: EMAILJS_PUBLIC_KEY,
+      templateParams: autoReplyParams
+    });
+    const autoReplyResult = await window.emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_AUTO_REPLY_TEMPLATE_ID,
+      autoReplyParams,
+      EMAILJS_PUBLIC_KEY
+    );
+    console.log('Auto-Reply Result:', autoReplyResult);
+
+    if (notificationResult.status === 200 && autoReplyResult.status === 200) {
       setShowSuccess(true);
       setFormData({ name: '', email: '', message: '' });
-      setIsSubmitting(false);
-      
-      // Hide success message after 4 seconds
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 4000);
-    }, 1000);
-  };
+      setTimeout(() => setShowSuccess(false), 4000);
+    }
+  } catch (error) {
+    console.error('EmailJS Error:', error);
+    setErrorMessage(`Failed to send message: ${error.message}. Please try again or email me directly.`);
+    setShowError(true);
+    setTimeout(() => setShowError(false), 5000);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -189,6 +299,21 @@ const Contact = () => {
           </div>
         </div>
       )}
+
+      {/* Error Message */}
+      {showError && (
+        <div className={styles.errorMessage}>
+          <div className={styles.errorCard}>
+            <div className={styles.errorIcon}>
+              <AlertCircle size={24} />
+            </div>
+            <div className={styles.errorContent}>
+              <h3>Message Failed to Send</h3>
+              <p>{errorMessage}</p>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Social Sidebar */}
       <div className={`${styles.socialSidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`}>
@@ -235,7 +360,7 @@ const Contact = () => {
           <div className={styles.contactHeader}>
             <h2 className={styles.contactTitle}>Let's Connect</h2>
             <p className={styles.contactSubtitle}>
-              Ready to bring your ideas to life? Drop me a message!
+              Ready to bring your ideas to life? Drop me a message and let's create something amazing together!
             </p>
           </div>
 
@@ -272,7 +397,7 @@ const Contact = () => {
             </div>
 
             {/* Contact Form */}
-            <form className={styles.contactForm} onSubmit={handleSubmit}>
+            <div className={styles.contactForm}>
               <div className={styles.formGroup}>
                 <input
                   type="text"
@@ -281,7 +406,6 @@ const Contact = () => {
                   onChange={handleInputChange}
                   placeholder="Your Name"
                   className={styles.formInput}
-                  required
                 />
               </div>
 
@@ -293,7 +417,6 @@ const Contact = () => {
                   onChange={handleInputChange}
                   placeholder="Your Email"
                   className={styles.formInput}
-                  required
                 />
               </div>
 
@@ -305,12 +428,11 @@ const Contact = () => {
                   placeholder="Your Message"
                   className={styles.formTextarea}
                   rows="5"
-                  required
                 ></textarea>
               </div>
 
               <button
-                type="submit"
+                onClick={handleSubmit}
                 className={`${styles.submitButton} ${isSubmitting ? styles.submitting : ''}`}
                 disabled={isSubmitting}
               >
@@ -322,11 +444,11 @@ const Contact = () => {
                 ) : (
                   <>
                     Send Message
-                    <span className={styles.buttonIcon}>🚀</span>
+                    <span className={styles.buttonIcon}></span>
                   </>
                 )}
               </button>
-            </form>
+            </div>
           </div>
         </div>
       </div>

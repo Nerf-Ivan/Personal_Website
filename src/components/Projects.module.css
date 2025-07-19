@@ -1,0 +1,462 @@
+/* ProjectsShowcase.module.css */
+
+/* Container & Layout */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000000 0%, #01002e 50%, #047aa8 100%);
+  padding: 2rem;
+}
+
+.headerWrapper {
+  max-width: 1280px;
+  margin: 0 auto 4rem auto;
+}
+
+.projectsWrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Header Styles */
+.titleSection {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.mainTitle {
+  font-size: 3.75rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0987b9, #47f0e2, #0d92eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #d1d5db;
+  max-width: 48rem;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* Stats Bar */
+.statsBar {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statNumber {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #22d3ee;
+}
+
+.statNumber:nth-child(odd) {
+  color: #049e1e;
+}
+
+.statNumber:nth-child(3n) {
+  color: #ec4899;
+}
+
+.statLabel {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+/* Projects Grid */
+.projectsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .projectsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .projectsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Project Card Styles */
+.projectGroup {
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.projectHovered {
+  transform: scale(1.05) rotate(-1deg);
+}
+
+.projectCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.5), rgba(17, 24, 39, 0.5));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.projectHovered .projectCard {
+  border-color: rgba(147, 51, 234, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(147, 51, 234, 0.2);
+}
+
+/* Badges */
+.statusBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+}
+
+.statusPill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.statusFeatured {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.statusLive {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.statusProduction {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.statusBeta {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.statusMobile {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.statusEnterprise {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.statusDefault {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+}
+
+.complexityBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+}
+
+.complexityPill {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  color: white;
+  font-size: 0.75rem;
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Image Container */
+.imageContainer {
+  position: relative;
+  height: 12rem;
+  overflow: hidden;
+}
+
+.projectImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.projectHovered .projectImage {
+  transform: scale(1.1);
+}
+
+.imageGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #111827, transparent, transparent);
+}
+
+.previewOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlayVisible {
+  opacity: 1;
+}
+
+.eyeIcon {
+  width: 2rem;
+  height: 2rem;
+  color: white;
+}
+
+/* Content */
+.content {
+  padding: 1.5rem;
+}
+
+.projectTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.projectGroup:hover .projectTitle {
+  color: #22d3ee;
+}
+
+.projectDescription {
+  color: #d1d5db;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+/* Tech Stack */
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.techPill {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(34, 211, 238, 0.2));
+  color: #67e8f9;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  transition: border-color 0.3s ease;
+}
+
+.techPill:hover {
+  border-color: rgba(34, 211, 238, 0.5);
+}
+
+/* Action Buttons */
+.actionButtons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.demoButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, #22d3ee, #3b82f6);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.demoButton:hover {
+  background: linear-gradient(135deg, #06b6d4, #2563eb);
+  transform: scale(1.05);
+  box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.25);
+}
+
+.githubButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: #1f2937;
+  color: #d1d5db;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid #4b5563;
+  transition: all 0.2s ease;
+}
+
+.githubButton:hover {
+  border-color: #6b7280;
+  color: white;
+  transform: scale(1.05);
+}
+
+.buttonIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Particles Effect */
+.particlesContainer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 0.25rem;
+  height: 0.25rem;
+  background: #22d3ee;
+  border-radius: 50%;
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Call to Action */
+.ctaWrapper {
+  max-width: 64rem;
+  margin: 5rem auto 0 auto;
+  text-align: center;
+}
+
+.ctaCard {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(34, 211, 238, 0.2));
+  backdrop-filter: blur(16px);
+  border-radius: 1rem;
+  padding: 2rem;
+  border: 1px solid rgba(147, 51, 234, 0.2);
+}
+
+.ctaTitle {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.ctaDescription {
+  color: #d1d5db;
+  margin-bottom: 1.5rem;
+  font-size: 1.125rem;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.contactButton {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #22d3ee, #3b82f6);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.25);
+}
+
+.contactButton:hover {
+  background: linear-gradient(135deg, #06b6d4, #2563eb);
+  transform: scale(1.05);
+}
+
+.resumeButton {
+  padding: 0.75rem 2rem;
+  border: 1px solid #8b5cf6;
+  color: #a78bfa;
+  background: transparent;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.resumeButton:hover {
+  background: rgba(139, 92, 246, 0.1);
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .mainTitle {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .statsBar {
+    gap: 1rem;
+  }
+
+  .projectsGrid {
+    gap: 1.5rem;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contactButton,
+  .resumeButton {
+    width: 100%;
+    max-width: 200px;
+  }
+}

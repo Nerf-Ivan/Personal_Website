@@ -8,6 +8,7 @@ import Home from './components/Home.jsx';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Navbar from './components/Navbar.jsx';
+import ProjectsShowcase from './components/Projects.jsx';
 
 function App() {
   useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
       <Home />
       <Skills />
       <Contact />
+      <ProjectsShowcase/>
     </div>
   );
 }

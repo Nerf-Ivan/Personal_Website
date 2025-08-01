@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Linkedin, Instagram, Twitter, Github, Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import { Linkedin, Instagram, Twitter, Github, Mail, CheckCircle, AlertCircle, Award } from 'lucide-react';
 import styles from './Contact.module.css';
 import emailjs from '@emailjs/browser';
 
@@ -274,6 +274,12 @@ const handleSubmit = async (e) => {
       name: 'Email',
       Icon: Mail,
       url: 'mailto:ivan.swanepoel.dev@gmail.com',
+      color: '#EA4335'
+    },
+    {
+      name: 'Credly',
+      Icon: Award,
+      url: 'https://www.credly.com/users/ivan-swanepoel/badges#credly',
       color: '#EA4335'
     }
   ];

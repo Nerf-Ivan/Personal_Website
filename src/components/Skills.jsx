@@ -16,6 +16,7 @@ import {
   SiGithub,
   SiHtml5,
   SiFlask,
+  SiDjango,
 } from 'react-icons/si';
 
 const ParticleBackground = () => {
@@ -148,6 +149,7 @@ const SkillLogo = ({ skill }) => {
     'HTML': <SiHtml5 color="#ff7300ff" size={28} />,
     'Flask': <SiFlask color="#f5f5f5ff" size={48} />,
     'SQL': <TbDatabase color="#00a6f3ff" size={48} />,
+    'Django': <SiDjango color="#ff7300ff" size={48} />
 
   };
 
@@ -183,7 +185,8 @@ const Skills = () => {
     'Github',
     'TypeScript',
     'MongoDB',
-    'SQL'
+    'SQL',
+    'Django'
   ];
 
   return (

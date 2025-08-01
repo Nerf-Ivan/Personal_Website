@@ -54,7 +54,7 @@ const Navbar = () => {
               />
               <div className={styles.logoGlow}></div>
             </div>
-            <span className={styles.logoText}>Ivan Swanepoel</span>
+            <span className={styles.logoText}>Personal Webpage</span>
           </div>
 
           <div

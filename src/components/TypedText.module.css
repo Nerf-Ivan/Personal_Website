@@ -1,15 +1,35 @@
-/* styles.css or module */
 .typing {
   font-family: 'Courier New', monospace;
-  color: #ffffff;
+  color: #33CC33; /* Green color */
   white-space: pre;
-}
-.typed-cursor {
-  font-weight: bold;
-  animation: blink 0.7s infinite;
+  animation: glitch 2s infinite;
+  background: linear-gradient(to bottom, #000000 50%, #000000 50%);
+  background-size: 100% 200%;
+  background-position: 0 100%;
+  transition: background-position 0.5s ease-out;
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 1 }
-  50% { opacity: 0 }
+.typing:hover {
+  background-position: 0 0;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  }
+  20% {
+    text-shadow: 0 0 10px rgba(0, 255, 0, 1);
+  }
+  40% {
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  }
+  60% {
+    text-shadow: 0 0 10px rgba(0, 255, 0, 1);
+  }
+  80% {
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(0, 255, 0, 1);
+  }
 }

@@ -10,7 +10,13 @@
   align-items: center;
   justify-content: center;
 }
-
+/* Disable text selection */
+.section,
+.content,
+.heading,
+.subtitle {
+  user-select: none;
+}
 /* Particles.js container */
 .particlesContainer {
   position: absolute;
@@ -32,18 +38,34 @@
 
 /* Main heading with enhanced styling */
 .heading {
-  color: #ffffff;
-  font-size: 3rem;
+  font-size: 4rem;
+  font-weight: 800;
+  text-align: center;
   margin-bottom: 2rem;
-  font-weight: 700;
-  text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
   background: linear-gradient(45deg, #ffffff, #00ffff);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: glow 3s ease-in-out infinite alternate;
+  animation: fadeInUp 1s ease-out;
+  animation-fill-mode: forwards;
+  cursor: pointer; /* Add a pointer cursor on hover */
+  transition: transform 0.2s ease-in-out; /* Add a transition effect */
 }
-
+.heading:hover {
+  transform: scale(1.1); /* Scale up on hover */
+}
+.heading:active {
+  transform: translateY(2px); /* Move down slightly on click */
+  animation: bounce 0.5s ease-in-out; /* Add a bounce animation on click */
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
 /* Glow animation for heading */
 @keyframes glow {
   from {
@@ -66,6 +88,7 @@
 /* General heading styles */
 h1, h2, h3 {
   color: white;
+  
 }
 
 /* Smooth gradient transition at bottom for seamless flow into next section */

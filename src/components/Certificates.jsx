@@ -44,11 +44,11 @@ const Certificates = () => {
     },
     {
       id: 5,
-      name: "AI Applications with Python & Flask",
+      name: "Developing AI Applications with Python and Flask",
       issuer: "IBM",
       date: "2025",
       image: "/certificates/AI_apps_with_python_and_flask_Certificate.jpg",
-      link: "#",
+      link: "https://www.coursera.org/account/accomplishments/verify/15X2NDM07JR1",
       description: "Building AI-powered applications with Python and Flask"
     },
     {

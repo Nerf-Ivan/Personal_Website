@@ -1,7 +1,123 @@
 // ProjectsShowcase.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ExternalLink, Github, Code, Zap, Star, Eye } from 'lucide-react';
 import styles from './Projects.module.css';
+
+const ParticleBackground = () => {
+  const canvasRef = useRef(null);
+  const animationRef = useRef(null);
+  const particlesRef = useRef([]);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas size
+    const resizeCanvas = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      // Reinitialize particles on resize
+      initParticles();
+    };
+
+    // Particle class
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+        this.size = Math.random() * 1.5 + 0.5;
+        this.opacity = Math.random() * 0.3 + 0.1;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Bounce off edges
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+
+      draw() {
+        ctx.globalAlpha = this.opacity;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = '#00ffff';
+        ctx.fill();
+      }
+    }
+
+    // Initialize particles
+    const initParticles = () => {
+      particlesRef.current = [];
+      const isMobile = window.innerWidth <= 768;
+      const particleCount = isMobile 
+        ? Math.floor((canvas.width * canvas.height) / 30000) // Fewer particles on mobile
+        : Math.floor((canvas.width * canvas.height) / 15000);
+      
+      for (let i = 0; i < particleCount; i++) {
+        particlesRef.current.push(new Particle(
+          Math.random() * canvas.width,
+          Math.random() * canvas.height
+        ));
+      }
+    };
+
+    // Animation loop
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw connections between nearby particles
+      for (let i = 0; i < particlesRef.current.length; i++) {
+        for (let j = i + 1; j < particlesRef.current.length; j++) {
+          const dx = particlesRef.current[i].x - particlesRef.current[j].x;
+          const dy = particlesRef.current[i].y - particlesRef.current[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 80) {
+            ctx.globalAlpha = 0.05 * (1 - distance / 80);
+            ctx.beginPath();
+            ctx.moveTo(particlesRef.current[i].x, particlesRef.current[i].y);
+            ctx.lineTo(particlesRef.current[j].x, particlesRef.current[j].y);
+            ctx.strokeStyle = '#00ffff';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Update and draw particles
+      particlesRef.current.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className={styles.particleBackground}
+    />
+  );
+};
 const ProjectsShowcase = () => {
   const [hoveredProject, setHoveredProject] = useState(null);
 
@@ -75,6 +191,9 @@ const ProjectsShowcase = () => {
 
   return (
     <div className={styles.container} id="projects">
+      {/* Background Layer */}
+      <ParticleBackground />
+      
       {/* Header */}
       <div className={styles.headerWrapper} >
         <div className={styles.titleSection}>

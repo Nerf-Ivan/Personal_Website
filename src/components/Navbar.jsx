@@ -8,12 +8,14 @@ import {
   faBolt,
   faPhone,
   faBriefcase,
+  faCertificate,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const navItems = [
   { id: "skills", label: "Skills", icon: faBolt },
-  { id: "contact", label: "Contact", icon: faPhone },
+  { id: "certificates", label: "Certificates", icon: faCertificate },
   { id: "projects", label: "Projects", icon: faBriefcase },
+  { id: "contact", label: "Contact", icon: faPhone },
 ];
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);

@@ -3,18 +3,34 @@
 /* Container & Layout */
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #01002e 50%, #047aa8 100%);
+  background: #020202;
   padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.particleBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .headerWrapper {
   max-width: 1280px;
   margin: 0 auto 4rem auto;
+  position: relative;
+  z-index: 2;
 }
 
 .projectsWrapper {
   max-width: 1280px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 /* Header Styles */

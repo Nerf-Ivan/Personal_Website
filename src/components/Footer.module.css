@@ -1,0 +1,156 @@
+.footer {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  border-top: 1px solid rgba(0, 255, 255, 0.2);
+  padding: 40px 0;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.5), transparent);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.copyright {
+  flex: 1;
+  min-width: 250px;
+}
+
+.copyright p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.copyright strong {
+  color: #00ffff;
+  font-weight: 600;
+}
+
+.madeWith {
+  text-align: center;
+  flex: 1;
+  min-width: 200px;
+}
+
+.madeWith p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.heart {
+  color: #ff6b6b;
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+.code {
+  color: #00ffff;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.links {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.link {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: #00ffff;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.link:hover {
+  color: #00ffff;
+  transform: translateY(-2px);
+}
+
+.link:hover::before {
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .copyright,
+  .madeWith,
+  .links {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .links {
+    justify-content: center;
+  }
+  
+  .footer {
+    padding: 30px 0;
+  }
+}

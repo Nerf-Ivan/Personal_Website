@@ -1,0 +1,19 @@
+.bug-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  touch-action: auto; /* Allow normal touch behaviors */
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .bug-canvas {
+    /* Ensure touch events pass through to underlying elements */
+    pointer-events: none;
+    touch-action: auto;
+  }
+}

@@ -23,6 +23,7 @@ const Contact = () => {
   const EMAILJS_NOTIFICATION_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_NOTIFICATION_TEMPLATE_ID;
   const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
   const EMAILJS_AUTO_REPLY_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_AUTO_REPLY_TEMPLATE_ID;
+  
   // Initialize EmailJS
   useEffect(() => {
     // Load EmailJS script dynamically
@@ -51,75 +52,101 @@ const Contact = () => {
     
     // Set canvas size
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     };
     
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Particle class
+    // Enhanced Particle class with darker theme
     class Particle {
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.radius = Math.random() * 2 + 1;
-        this.opacity = Math.random() * 0.5 + 0.3;
+        const rect = canvas.getBoundingClientRect();
+        this.x = Math.random() * rect.width;
+        this.y = Math.random() * rect.height;
+        this.vx = (Math.random() - 0.5) * 0.8;
+        this.vy = (Math.random() - 0.5) * 0.8;
+        this.radius = Math.random() * 3 + 1;
+        this.opacity = Math.random() * 0.4 + 0.2;
+        this.color = this.getRandomColor();
+        this.originalRadius = this.radius;
+        this.pulseSpeed = Math.random() * 0.02 + 0.01;
+        this.pulseOffset = Math.random() * Math.PI * 2;
+      }
+
+      getRandomColor() {
+        const colors = ['#64ffda', '#00d4ff', '#4a9eff', '#8b5cf6', '#06b6d4'];
+        return colors[Math.floor(Math.random() * colors.length)];
       }
 
       update() {
+        const rect = canvas.getBoundingClientRect();
         this.x += this.vx;
         this.y += this.vy;
 
-        if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx;
-        if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy;
+        // Bounce off edges
+        if (this.x < 0 || this.x > rect.width) this.vx = -this.vx;
+        if (this.y < 0 || this.y > rect.height) this.vy = -this.vy;
+
+        // Pulse effect
+        this.radius = this.originalRadius + Math.sin(Date.now() * this.pulseSpeed + this.pulseOffset) * 0.5;
       }
 
       draw() {
         ctx.globalAlpha = this.opacity;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#64ffda';
+        ctx.fillStyle = this.color;
         ctx.fill();
         ctx.globalAlpha = 1;
       }
     }
 
-    // Create particles
+    // Create particles with responsive count
     const createParticles = () => {
       particlesRef.current = [];
-      for (let i = 0; i < 100; i++) {
+      const rect = canvas.getBoundingClientRect();
+      const particleCount = Math.min(150, Math.floor((rect.width * rect.height) / 10000));
+      
+      for (let i = 0; i < particleCount; i++) {
         particlesRef.current.push(new Particle());
       }
     };
 
-    // Animation loop
+    // Enhanced animation loop
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
       
-      // Draw connections
+      // Draw connections with improved performance
       particlesRef.current.forEach((particle, i) => {
         particle.update();
         particle.draw();
 
-        // Draw lines between nearby particles
-        for (let j = i + 1; j < particlesRef.current.length; j++) {
+        // Draw lines between nearby particles (optimized for mobile)
+        const maxConnections = window.innerWidth < 768 ? 3 : 5;
+        let connections = 0;
+        
+        for (let j = i + 1; j < particlesRef.current.length && connections < maxConnections; j++) {
           const dx = particle.x - particlesRef.current[j].x;
           const dy = particle.y - particlesRef.current[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 100) {
-            ctx.globalAlpha = 0.1;
+          if (distance < (window.innerWidth < 768 ? 80 : 120)) {
+            ctx.globalAlpha = 0.08 * (1 - distance / 120);
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(particlesRef.current[j].x, particlesRef.current[j].y);
-            ctx.strokeStyle = '#64ffda';
+            ctx.strokeStyle = particle.color;
+            ctx.lineWidth = 1;
             ctx.stroke();
-            ctx.globalAlpha = 1;
+            connections++;
           }
         }
+        ctx.globalAlpha = 1;
       });
 
       animationRef.current = requestAnimationFrame(animate);

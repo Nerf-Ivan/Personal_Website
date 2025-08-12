@@ -4,7 +4,7 @@
 .contactContainer {
   position: relative;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a1a1a 50%, #0a0a0a 75%, #000000 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,6 +20,7 @@
   height: 100%;
   z-index: 1;
   pointer-events: none;
+  opacity: 0.8;
 }
 
 .contactOverlay {
@@ -92,6 +93,57 @@
   }
 }
 
+/* === Error Message === */
+.errorMessage {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 1001;
+  animation: slideInRight 0.5s ease-out;
+}
+
+.errorCard {
+  background: rgba(239, 68, 68, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.2);
+  min-width: 300px;
+}
+
+.errorIcon {
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(239, 68, 68, 0.2);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.errorContent h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.25rem 0;
+}
+
+.errorContent p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  margin: 0;
+  line-height: 1.4;
+}
+
 /* === Social Sidebar === */
 .socialSidebar {
   position: fixed;
@@ -99,7 +151,7 @@
   left: -300px;
   width: 300px;
   height: 100vh;
-  background: rgba(10, 10, 10, 0.95);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-right: 1px solid rgba(100, 255, 218, 0.1);
@@ -259,13 +311,13 @@
 
 /* === Contact Content === */
 .contactContent {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(100, 255, 218, 0.1);
   border-radius: 24px;
   padding: 3rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   position: relative;
   overflow: hidden;
 }
@@ -324,16 +376,17 @@
   align-items: center;
   gap: 1.5rem;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(100, 255, 218, 0.1);
   border-radius: 16px;
   transition: all 0.3s ease;
 }
 
 .infoCard:hover {
   background: rgba(100, 255, 218, 0.05);
-  border-color: rgba(100, 255, 218, 0.2);
+  border-color: rgba(100, 255, 218, 0.3);
   transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(100, 255, 218, 0.1);
 }
 
 .infoIcon {
@@ -390,8 +443,8 @@
 .formTextarea {
   width: 100%;
   padding: 1.25rem 1.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(100, 255, 218, 0.1);
   border-radius: 12px;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
@@ -487,22 +540,50 @@
 }
 
 /* === Responsive Design === */
+@media (max-width: 1024px) {
+  .contactContainer {
+    padding: 1.5rem;
+  }
+
+  .contactContent {
+    padding: 2.5rem;
+  }
+
+  .contactGrid {
+    gap: 3rem;
+  }
+}
+
 @media (max-width: 768px) {
   .contactContainer {
     padding: 1rem;
+    min-height: 100vh;
   }
 
   .contactContent {
     padding: 2rem;
+    margin: 1rem;
   }
 
   .contactTitle {
     font-size: 2.5rem;
   }
 
+  .contactSubtitle {
+    font-size: 1.1rem;
+  }
+
   .contactGrid {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .contactInfo {
+    order: 2;
+  }
+
+  .contactForm {
+    order: 1;
   }
 
   .socialSidebar {
@@ -520,39 +601,85 @@
     width: 18px;
   }
 
-  .successMessage {
+  .successMessage,
+  .errorMessage {
     top: 1rem;
     right: 1rem;
     left: 1rem;
   }
 
-  .successCard {
+  .successCard,
+  .errorCard {
     min-width: auto;
+  }
+
+  .infoCard {
+    padding: 1.25rem;
+    gap: 1.25rem;
+  }
+
+  .infoIcon {
+    width: 55px;
+    height: 55px;
+    font-size: 1.75rem;
   }
 }
 
 @media (max-width: 480px) {
+  .contactContainer {
+    padding: 0.5rem;
+  }
+
   .contactContent {
     padding: 1.5rem;
+    margin: 0.5rem;
+    border-radius: 16px;
   }
 
   .contactTitle {
     font-size: 2rem;
+    margin-bottom: 0.75rem;
   }
 
   .contactSubtitle {
     font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .contactHeader {
+    margin-bottom: 2rem;
   }
 
   .infoCard {
     padding: 1rem;
     gap: 1rem;
+    flex-direction: column;
+    text-align: center;
   }
 
   .infoIcon {
     width: 50px;
     height: 50px;
     font-size: 1.5rem;
+  }
+
+  .infoText h4 {
+    font-size: 1rem;
+  }
+
+  .infoText p {
+    font-size: 0.9rem;
+  }
+
+  .formInput,
+  .formTextarea {
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .submitButton {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
   }
 
   .socialSidebar {
@@ -577,17 +704,71 @@
     font-size: 0.9rem;
   }
 
-  .successCard {
+  .successCard,
+  .errorCard {
     padding: 1rem;
     flex-direction: column;
     text-align: center;
+    gap: 0.75rem;
   }
 
-  .successContent h3 {
+  .successContent h3,
+  .errorContent h3 {
     font-size: 1rem;
   }
 
-  .successContent p {
+  .successContent p,
+  .errorContent p {
     font-size: 0.85rem;
+  }
+
+  .successIcon,
+  .errorIcon {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 360px) {
+  .contactContent {
+    padding: 1rem;
+  }
+
+  .contactTitle {
+    font-size: 1.75rem;
+  }
+
+  .contactSubtitle {
+    font-size: 0.9rem;
+  }
+
+  .formInput,
+  .formTextarea {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .submitButton {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* === Touch Device Optimizations === */
+@media (hover: none) and (pointer: coarse) {
+  .socialLink:hover {
+    transform: none;
+  }
+
+  .infoCard:hover {
+    transform: none;
+  }
+
+  .submitButton:hover {
+    transform: none;
+  }
+
+  .sidebarToggle:hover {
+    transform: translateY(-50%);
   }
 }

@@ -47,13 +47,16 @@ const Home = () => {
         return;
       }
 
+      // Check if device is mobile for performance optimization
+      const isMobile = window.innerWidth <= 768;
+      
       window.particlesJS("particles-js", {
         particles: {
           number: {
-            value: 50,
+            value: isMobile ? 20 : 50,
             density: {
               enable: true,
-              value_area: 1000,
+              value_area: isMobile ? 800 : 1000,
             },
           },
           color: {
@@ -91,7 +94,7 @@ const Home = () => {
           },
           move: {
             enable: true,
-            speed: 1,
+            speed: isMobile ? 0.5 : 1,
             direction: "none",
             random: true,
             straight: false,
@@ -103,11 +106,11 @@ const Home = () => {
           detect_on: "canvas",
           events: {
             onhover: {
-              enable: true,
+              enable: !isMobile,
               mode: "repulse",
             },
             onclick: {
-              enable: true,
+              enable: !isMobile,
               mode: "push",
             },
             resize: true,

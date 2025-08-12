@@ -17,7 +17,12 @@ import {
   SiHtml5,
   SiFlask,
   SiDjango,
+  SiDocker,
+  SiKubernetes,
+  SiPostman,
+  SiFigma,
 } from 'react-icons/si';
+import { VscVscode } from 'react-icons/vsc';
 
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
@@ -138,19 +143,24 @@ const SkillLogo = ({ skill }) => {
     'JavaScript': <SiJavascript color="#f7df1e" size={28} />,
     'React': <SiReact color="#61dafb" size={28} />,
     'Python': <SiPython color="#3776ab" size={28} />,
-    'CSS Modules': <SiCss3 color="#1572b6" size={28} />,
+    'CSS': <SiCss3 color="#1572b6" size={28} />,
     'Node.js': <SiNodedotjs color="#8cc84b" size={28} />,
     'Git': <SiGit color="#f05032" size={28} />,
     'TypeScript': <SiTypescript color="#3178c6" size={28} />,
     'MongoDB': <SiMongodb color="#47a248" size={28} />,
     'Tailwind CSS': <SiTailwindcss color="#06b6d4" size={28} />,
     'C': <SiC color="#06b6d4" size={28} />,
-    'Github': <SiGithub color="#d8d8d8ff" size={28} />,
+    'GitHub': <SiGithub color="#d8d8d8ff" size={28} />,
     'HTML': <SiHtml5 color="#ff7300ff" size={28} />,
-    'Flask': <SiFlask color="#f5f5f5ff" size={48} />,
-    'SQL': <TbDatabase color="#00a6f3ff" size={48} />,
-    'Django': <SiDjango color="#ff7300ff" size={48} />
-
+    'Flask': <SiFlask color="#f5f5f5ff" size={28} />,
+    'SQL': <TbDatabase color="#00a6f3ff" size={28} />,
+    'Django': <SiDjango color="#ff7300ff" size={28} />,
+    'Docker': <SiDocker color="#2496ed" size={28} />,
+    'Kubernetes': <SiKubernetes color="#326ce5" size={28} />,
+    'AWS': <div style={{ width: '28px', height: '28px', backgroundColor: '#ff9900', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '12px', fontWeight: 'bold' }}>AWS</div>,
+    'VS Code': <VscVscode color="#007acc" size={28} />,
+    'Postman': <SiPostman color="#ff6c37" size={28} />,
+    'Figma': <SiFigma color="#f24e1e" size={28} />
   };
 
   return logoMap[skill] || (
@@ -172,21 +182,47 @@ const SkillLogo = ({ skill }) => {
 };
 
 const Skills = () => {
-  const skills = [
-    'JavaScript',
-    'Python', 
-    'C',
-    'React',
-    'CSS Modules',
-    'HTML',
-    'Node.js',
-    'Flask',
-    'Git',
-    'Github',
-    'TypeScript',
-    'MongoDB',
-    'SQL',
-    'Django'
+  const skillCategories = [
+    {
+      name: "Programming Languages",
+      skills: [
+        { name: "JavaScript", proficiency: 70, description: "ES6+, DOM manipulation, async programming" },
+        { name: "Python", proficiency: 85, description: "Data structures, algorithms, web development" },
+        { name: "C", proficiency: 70, description: "Systems programming, memory management" },
+        { name: "TypeScript", proficiency: 80, description: "Type safety, interfaces, generics" },
+        { name: "HTML", proficiency: 95, description: "Semantic markup, accessibility" },
+        { name: "CSS", proficiency: 85, description: "Flexbox, Grid, animations, responsive design" }
+      ]
+    },
+    {
+      name: "Frameworks & Libraries",
+      skills: [
+        { name: "React", proficiency: 85, description: "Hooks, Context API, component architecture" },
+        { name: "Node.js", proficiency: 80, description: "Express.js, REST APIs, middleware" },
+        { name: "Django", proficiency: 75, description: "MVC pattern, ORM, admin interface" },
+        { name: "Flask", proficiency: 70, description: "Micro-framework, blueprints, extensions" },
+        { name: "Tailwind CSS", proficiency: 75, description: "Utility-first CSS, responsive design" }
+      ]
+    },
+    {
+      name: "Databases & Cloud",
+      skills: [
+        { name: "MongoDB", proficiency: 75, description: "NoSQL, aggregation, indexing" },
+        { name: "SQL", proficiency: 80, description: "Relational databases, complex queries" },
+        { name: "Docker", proficiency: 75, description: "Containerization, Docker Compose" },
+        { name: "Kubernetes", proficiency: 65, description: "Container orchestration, scaling" }
+      ]
+    },
+    {
+      name: "Tools & Platforms",
+      skills: [
+        { name: "Git", proficiency: 90, description: "Version control, branching, collaboration" },
+        { name: "GitHub", proficiency: 85, description: "Repository management, CI/CD" },
+        { name: "VS Code", proficiency: 95, description: "Extensions, debugging, integrated terminal" },
+        { name: "Postman", proficiency: 80, description: "API testing, documentation" },
+        { name: "Figma", proficiency: 70, description: "UI/UX design, prototyping" }
+      ]
+    }
   ];
 
   return (
@@ -197,23 +233,69 @@ const Skills = () => {
       {/* Content Layer */}
       <div className={styles.content}>
         <h2 className={styles.heading} data-aos="fade-right">
-          My Skills
+          Skills & Expertise
         </h2>
-        <div className={styles.skillsGrid}>
-          {skills.map((skill, index) => (
+        <p className={styles.subtitle} data-aos="fade-right" data-aos-delay="200">
+          A comprehensive overview of my technical skills and proficiency levels
+        </p>
+        
+        <div className={styles.categoriesContainer}>
+          {skillCategories.map((category, categoryIndex) => (
             <div 
-              key={skill}
-              className={styles.skillItem}
+              key={category.name}
+              className={styles.category}
               data-aos="fade-up"
-              data-aos-delay={index * 100}
-              data-aos-duration="800"
+              data-aos-delay={categoryIndex * 100}
             >
-              <div className={styles.skillLogo}>
-                <SkillLogo skill={skill} />
+              <h3 className={styles.categoryTitle}>{category.name}</h3>
+              <div className={styles.skillsList}>
+                {category.skills.map((skill, skillIndex) => (
+                  <div 
+                    key={skill.name}
+                    className={styles.skillItem}
+                    data-aos="fade-up"
+                    data-aos-delay={(categoryIndex * 100) + (skillIndex * 50)}
+                  >
+                    <div className={styles.skillHeader}>
+                      <div className={styles.skillLogo}>
+                        <SkillLogo skill={skill.name} />
+                      </div>
+                      <div className={styles.skillInfo}>
+                        <span className={styles.skillName}>{skill.name}</span>
+                        <span className={styles.skillDescription}>{skill.description}</span>
+                      </div>
+                      <div className={styles.proficiencyLevel}>
+                        <span className={styles.proficiencyText}>{skill.proficiency}%</span>
+                      </div>
+                    </div>
+                    
+                    <div className={styles.progressBar}>
+                      <div 
+                        className={styles.progressFill}
+                        style={{ width: `${skill.proficiency}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
-              <span className={styles.skillName}>{skill}</span>
             </div>
           ))}
+        </div>
+
+        {/* Skills Summary */}
+        <div className={styles.skillsSummary} data-aos="fade-up">
+          <div className={styles.summaryCard}>
+            <h4>Frontend Development</h4>
+            <p>React, TypeScript, HTML5, CSS3, Tailwind CSS</p>
+          </div>
+          <div className={styles.summaryCard}>
+            <h4>Backend Development</h4>
+            <p>Node.js, Python, Django, Flask, REST APIs</p>
+          </div>
+          <div className={styles.summaryCard}>
+            <h4>DevOps & Cloud</h4>
+            <p>Docker, Kubernetes, CI/CD, Git</p>
+          </div>
         </div>
       </div>
     </section>

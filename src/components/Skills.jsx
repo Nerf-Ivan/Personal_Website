@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import styles from './Skills.module.css';
 import { TbDatabase } from "react-icons/tb";
@@ -21,8 +20,10 @@ import {
   SiKubernetes,
   SiPostman,
   SiFigma,
+  SiOpenai,
 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
+import { BiBot } from 'react-icons/bi';
 
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
@@ -160,7 +161,8 @@ const SkillLogo = ({ skill }) => {
     'AWS': <div style={{ width: '28px', height: '28px', backgroundColor: '#ff9900', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '12px', fontWeight: 'bold' }}>AWS</div>,
     'VS Code': <VscVscode color="#007acc" size={28} />,
     'Postman': <SiPostman color="#ff6c37" size={28} />,
-    'Figma': <SiFigma color="#f24e1e" size={28} />
+    'Figma': <SiFigma color="#f24e1e" size={28} />,
+    'AI/ML': <BiBot color="#10a37f" size={28} />
   };
 
   return logoMap[skill] || (
@@ -186,44 +188,57 @@ const Skills = () => {
     {
       name: "Programming Languages",
       skills: [
-        { name: "JavaScript", proficiency: 70, description: "ES6+, DOM manipulation, async programming" },
-        { name: "Python", proficiency: 85, description: "Data structures, algorithms, web development" },
-        { name: "C", proficiency: 70, description: "Systems programming, memory management" },
-        { name: "TypeScript", proficiency: 80, description: "Type safety, interfaces, generics" },
-        { name: "HTML", proficiency: 95, description: "Semantic markup, accessibility" },
-        { name: "CSS", proficiency: 85, description: "Flexbox, Grid, animations, responsive design" }
+        { name: "JavaScript", experience: 3, description: "ES6+, DOM manipulation, async programming" },
+        { name: "Python", experience: 3, description: "Data structures, algorithms, web development" },
+        { name: "C", experience: 2, description: "Systems programming, memory management" },
+        { name: "TypeScript", experience: 1, description: "Type safety, interfaces, generics" },
+        { name: "HTML", experience: 4, description: "Semantic markup, accessibility" },
+        { name: "CSS", experience: 3, description: "Flexbox, Grid, animations, responsive design" }
       ]
     },
     {
       name: "Frameworks & Libraries",
       skills: [
-        { name: "React", proficiency: 85, description: "Hooks, Context API, component architecture" },
-        { name: "Node.js", proficiency: 80, description: "Express.js, REST APIs, middleware" },
-        { name: "Django", proficiency: 75, description: "MVC pattern, ORM, admin interface" },
-        { name: "Flask", proficiency: 70, description: "Micro-framework, blueprints, extensions" },
-        { name: "Tailwind CSS", proficiency: 75, description: "Utility-first CSS, responsive design" }
+        { name: "React", experience: 1, description: "Hooks, Context API, component architecture" },
+        { name: "Node.js", experience: 1, description: "Express.js, REST APIs, middleware" },
+        { name: "Django", experience: 1, description: "MVC pattern, ORM, admin interface" },
+        { name: "Flask", experience: 2, description: "Micro-framework, blueprints, extensions" },
+        { name: "Tailwind CSS", experience: 1, description: "Utility-first CSS, responsive design" }
       ]
     },
     {
       name: "Databases & Cloud",
       skills: [
-        { name: "MongoDB", proficiency: 75, description: "NoSQL, aggregation, indexing" },
-        { name: "SQL", proficiency: 80, description: "Relational databases, complex queries" },
-        { name: "Docker", proficiency: 75, description: "Containerization, Docker Compose" },
-        { name: "Kubernetes", proficiency: 65, description: "Container orchestration, scaling" }
+        { name: "MongoDB", experience: 1, description: "NoSQL, aggregation, indexing" },
+        { name: "SQL", experience: 2, description: "Relational databases, complex queries" },
+        { name: "Docker", experience: 1, description: "Containerization, Docker Compose" },
+        { name: "Kubernetes", experience: 1, description: "Container orchestration, scaling" }
       ]
     },
     {
       name: "Tools & Platforms",
       skills: [
-        { name: "Git", proficiency: 90, description: "Version control, branching, collaboration" },
-        { name: "GitHub", proficiency: 85, description: "Repository management, CI/CD" },
-        { name: "VS Code", proficiency: 95, description: "Extensions, debugging, integrated terminal" },
-        { name: "Postman", proficiency: 80, description: "API testing, documentation" },
-        { name: "Figma", proficiency: 70, description: "UI/UX design, prototyping" }
+        { name: "Git", experience: 3, description: "Version control, branching, collaboration" },
+        { name: "GitHub", experience: 3, description: "Repository management, CI/CD" },
+        { name: "VS Code", experience: 4, description: "Extensions, debugging, integrated terminal" },
+        { name: "Postman", experience: 2, description: "API testing, documentation" },
+        { name: "Figma", experience: 2, description: "UI/UX design, prototyping" },
+        { name: "AI/ML", experience: 3, description: "Machine learning, LLMs, prompt engineering" }
       ]
     }
   ];
+
+  // Function to get experience display text
+  const getExperienceText = (years) => {
+    if (years === 1) return "1 year";
+    return `${years} years`;
+  };
+
+  // Function to calculate progress bar width (max 5 years = 100%)
+  const getProgressWidth = (years) => {
+    const maxYears = 5;
+    return Math.min((years / maxYears) * 100, 100);
+  };
 
   return (
     <section className={styles.container} id="skills">
@@ -236,7 +251,7 @@ const Skills = () => {
           Skills & Expertise
         </h2>
         <p className={styles.subtitle} data-aos="fade-right" data-aos-delay="200">
-          A comprehensive overview of my technical skills and proficiency levels
+          A comprehensive overview of my technical skills and years of experience
         </p>
         
         <div className={styles.categoriesContainer}>
@@ -265,14 +280,14 @@ const Skills = () => {
                         <span className={styles.skillDescription}>{skill.description}</span>
                       </div>
                       <div className={styles.proficiencyLevel}>
-                        <span className={styles.proficiencyText}>{skill.proficiency}%</span>
+                        <span className={styles.proficiencyText}>{getExperienceText(skill.experience)}</span>
                       </div>
                     </div>
                     
                     <div className={styles.progressBar}>
                       <div 
                         className={styles.progressFill}
-                        style={{ width: `${skill.proficiency}%` }}
+                        style={{ width: `${getProgressWidth(skill.experience)}%` }}
                       />
                     </div>
                   </div>
@@ -295,6 +310,10 @@ const Skills = () => {
           <div className={styles.summaryCard}>
             <h4>DevOps & Cloud</h4>
             <p>Docker, Kubernetes, CI/CD, Git</p>
+          </div>
+          <div className={styles.summaryCard}>
+            <h4>AI & Machine Learning</h4>
+            <p>LLMs, Prompt Engineering, ML Models</p>
           </div>
         </div>
       </div>

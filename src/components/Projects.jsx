@@ -145,17 +145,7 @@ const ProjectsShowcase = () => {
       status: "In Progress",
       complexity: "Expert"
     },
-      {
-      id: 3,
-      title: "Quote Collector",
-      description: "Simple Quote Collector app that lets users add quotes and its author. Users can edit and delete quotes.",
-      features: ["Django", "TailwindCSS"],
-      image: "https://images.unsplash.com/photo-1553374402-559e8b431161?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cXVvdGVzfGVufDB8fDB8fHwy?w=800&h=200&fit=crop",
-      demoUrl: "https://quote-collector.onrender.com",
-      status: "Deployed",
-      githubUrl: "https://github.com/Nerf-Ivan/Quote_Collector",
-      complexity: "Medium"
-    },
+    
     {
       id: 4,
       title: "More Coming Soon!",

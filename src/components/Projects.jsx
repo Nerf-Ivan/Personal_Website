@@ -136,16 +136,26 @@ const ProjectsShowcase = () => {
     },
     {
       id: 2,
-      title: "(In Progress) Dictionary App using API",
-      description: "A modern Full Stack Dictionary Application that will help students find and understand unfamiliar words fast and with ease.",
+      title: "(In Progress) SmartBasket",
+      description: "A modern Full Stack price compare app using web scraping and APIs to get real time data of prices from local food store dealers in South Africa.",
       features: ["React", "Node.js", "API"],
-      image: "https://images.unsplash.com/photo-1622555063306-9930f396f051?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?w=200&h=200&fit=crop",
+      image: "/public/Discounted_Phones_Display.png",
       demoUrl: "https://img.freepik.com/free-vector/red-grunge-style-coming-soon-design_1017-26691.jpg?semt=ais_hybrid&w=740",
-      githubUrl: "https://github.com/Nerf-Ivan/",
+      githubUrl: "https://github.com/Nerf-Ivan/SmartBasket",
       status: "In Progress",
       complexity: "Expert"
     },
-    
+    {
+      id: 3,
+      title: "(In Progress) Weather App",
+      description: "A modern Full Stack Weather App providing real time weather updates and forecasts using a free API.",
+      features: ["Django", "React.js", "API"],
+      image: "/public/Weather_App.png",
+      demoUrl: "https://img.freepik.com/free-vector/red-grunge-style-coming-soon-design_1017-26691.jpg?semt=ais_hybrid&w=740",
+      githubUrl: "https://github.com/Nerf-Ivan/SmartBasket",
+      status: "In Progress",
+      complexity: "Expert"
+    },
     {
       id: 4,
       title: "More Coming Soon!",

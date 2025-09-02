@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCertificate, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Certificates = () => {
-  // Your actual certificates from the public/certificates folder
+  // actual certificates from the public/certificates folder
   const certificates = [
     {
       id: 1,
